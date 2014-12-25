@@ -8,4 +8,15 @@ Setup
 
 ###Ubuntu
 
-sudo apt-get install qemu-system-x86 bin86 bcc
+sudo apt-get install qemu-system-x86 bin86 bcc putty
+
+Usage
+-----
+
+* cd into directory needed
+* ./make.sh (mku in final)
+
+Contributions
+-------------
+
+Obviously others are going to come check this out, so bug fixes or improvements are appreciated.
