@@ -1,0 +1,4 @@
+qemu-system-i386 -hda vdisk -m 520M -smp $1 -localtime \
+ -serial pty -serial pty -parallel pty #-cdrom /tmp/MTX.kcw.iso -boot d
+
+

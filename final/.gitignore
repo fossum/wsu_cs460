@@ -1,0 +1,23 @@
+/mtximage
+/vdisk
+
+# Edit files
+*~
+
+# Object files
+*.o
+*.out
+/mtx.map
+
+# Local IDE files
+/CppApplication_1/dist/
+/CppApplication_1/build/
+nbproject/private/
+sample/nbproject/private/
+
+# Git merge files
+*.orig
+*.LOCAL.*
+*.BASE.*
+*.REMOTE.*
+*.BACKUP.*

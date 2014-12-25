@@ -1,0 +1,8 @@
+# Usage:
+# inode_loader [directory]
+
+mount mtximage /mnt/
+
+ls -lia /mnt/$1
+
+umount /mnt

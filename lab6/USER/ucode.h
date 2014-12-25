@@ -1,0 +1,23 @@
+
+int show_menu();
+int find_cmd(char *name);
+int debug();
+int getpid();
+int ps();
+int chname();
+int kmode();
+int kswitch();
+int wait();
+int exit();
+int fork();
+int exec();
+int geti();
+int getc();
+int putc(char c);
+int pipe();
+void show_pipe();
+int pfd();
+int read_pipe();
+int write_pipe();
+int close_pipe();
+int invalid(char *name);

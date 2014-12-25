@@ -1,0 +1,12 @@
+# Compiled source #
+###################
+*.o
+mtx
+
+# Copied Image #
+################
+mtximage
+
+# Log Files #
+#############
+koinstall.log

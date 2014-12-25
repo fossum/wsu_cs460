@@ -1,0 +1,33 @@
+#!/bin/bash
+
+if [ $# \< 1 ]; then echo Usage: mku filename; exit; fi
+
+# default partiton = 1
+PARTITION=1
+if [ $# \> 1 ]; then PARTITION=$2; fi
+
+VDISK=vdisk
+SECTOR=$(./ptable vdisk $PARTITION)
+OFFSET=$(expr $SECTOR \* 512)
+OUTPUT=program.out
+
+echo partition=$PARTITION sector=$SECTOR offset=$OFFSET
+#read dummy
+
+sudo mount -o loop,offset=$OFFSET $VDISK /mnt
+
+
+rm $OUTPUT
+echo "**** compiling $1.c *****************************************************"
+as86 -o u.o u.s
+bcc -c -ansi $1.c my_assert.c printlib.c ucode.c
+
+echo "**** linking $1.c ************************************************************"
+ld86 -o $OUTPUT u.o $1.o my_assert.o printlib.o ucode.o mtxlib /usr/lib/bcc/libc.a 2> /dev/null
+rm *.o
+
+echo copying $1 into $VDISK/bin/$1
+sudo cp -av $OUTPUT /mnt/bin/$1
+sudo umount /mnt
+
+echo done $1

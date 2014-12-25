@@ -1,0 +1,109 @@
+#include "type.h"
+
+PROC proc[NPROC], *running, *freeList, *readyQueue, *sleepList;
+int procSize = sizeof(PROC);
+int nproc;
+
+int color;
+
+int init()
+{
+  // YOUR C code to initialize freeList and readyQueue
+  // YOUR C code to create P0 as running
+} 
+
+            
+main()
+{
+      printf("\nMTX starts in main()\n");
+      init();      // initialize and create P0 as running
+      printf("P0 kfork P1\n");
+      
+      kfork();     // P0 kfork() P1
+      while(1){
+        printf("P0 running\n");
+        while(!readyQueue);
+        printf("P0 switch process\n");
+        tswitch();   // P0 switch to run P1
+     }
+}
+
+int scheduler()
+{
+  if (running->status == READY)
+      enqueue(&readyQueue, running);
+  
+  running = dequeue(&readyQueue);
+  color = 0x000A + (running->pid % 6);
+}
+
+int body();
+
+PROC *kfork()
+{
+  // YOUR C code to create a CHILD of priority=1, ready to run from body() and
+  // enter it into readyQueue by priority.
+  return p;       // return child's PROC pointer
+}         
+
+int geti()
+{
+   // YOUR C code to return an integer, e.g. 123
+}
+
+int do_tswitch()
+{
+  printf("proc %d tswitch()\n", running->pid);
+  tswitch();
+  printf("proc %d resumes\n", running->pid);
+}
+
+int do_kfork()
+{
+  PROC *p;
+  printf("proc%d kfork a child\n");
+  p = kfork();
+  if (p == 0)
+     printf("kfork failed\n");
+  else
+     printf("child pid = %d\n", p->pid);
+}
+
+int do_exit()
+{
+  int exitValue;
+  printf("proc %d call kexit() to die\n", running->pid);
+  printf("enter a value: ");
+  exitValue = geti();
+  kexit(exitValue);
+}
+
+int body()
+{
+  char c;
+  printf("proc %d resumes to body()\n", running->pid);
+
+  while(1){
+    printf("-----------------------------------------\n");
+    printList("freelist  ", freeList);
+    printQ("readyQueue", readyQueue);
+    printf("-----------------------------------------\n");
+
+   printf("proc %d running: priority=%d parent=%d enter a char [s|q|f] : ",
+           running->pid, running->priority, running->parent->pid );
+    c = getc(); printf("%c\n", c);
+    switch(c){
+       case 'f' : do_kfork();   break;
+       case 's' : do_tswitch(); break;
+       case 'q' : do_exit();    break;
+    }
+  }
+}
+
+int kexit(int exitValue)
+{
+    printf("proc %d in kexit(): exitValue=%d\n", running->pid, exitValue);
+    running->exitCode = exitValue;
+    running->status = ZOMBIE;
+    tswitch();
+} 
